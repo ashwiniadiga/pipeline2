@@ -26,9 +26,10 @@ jobs:
         uses: actions/checkout@v4
       # Modified to use the node-version from the workflow inputs
       - name: use running
-        run: echo ${ inputs.airflow-version }
-        # with:
-        #   airflow-version: ${{ inputs.node-version }}    
-      - run: echo ${ inputs.airflow-version }
+        env:
+          # Added 'AIRFLOW_VERSION' environment variable to the job
+          AIRFLOW_VERSION: ${{ inputs.airflow-version }}
+        run: echo "airflow version is ${AIRFLOW_VERSION}"
+      - run: echo  "running ${{ inputs.airflow-version }}"
       - run: echo "🍏 This job's status is ${{ job.status }}."
     
