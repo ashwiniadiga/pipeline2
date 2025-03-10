@@ -1,0 +1,36 @@
+name: build-test-deploy
+# Changed 'on' to enable this workflow to be called from other workflows
+on:
+  workflow_call:
+    # Introduced 'inputs' to define parameters that can be passed when calling this workflow
+    inputs:
+      airflow-version:
+        description: "Airflow version"
+        required: true
+        type: string
+
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      # Modified to use the node-version from the workflow inputs
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+
+  test: 
+    needs: build
+    runs-on: ubuntu-latest
+    steps: 
+      - name: checkout repo
+        uses: actions/checkout@v4
+      # Modified to use the node-version from the workflow inputs
+      - name: use running
+        run: echo ${ inputs.airflow-version }
+        with:
+          airflow-version: ${{ inputs.node-version }}    
+      - run: echo ${ inputs.airflow-version }
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+    
