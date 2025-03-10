@@ -8,7 +8,6 @@ on:
         description: "Airflow version"
         required: true
         type: string
-
 jobs: 
   build:
     runs-on: ubuntu-latest
@@ -19,7 +18,6 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
-
   test: 
     needs: build
     runs-on: ubuntu-latest
@@ -29,8 +27,8 @@ jobs:
       # Modified to use the node-version from the workflow inputs
       - name: use running
         run: echo ${ inputs.airflow-version }
-        with:
-          airflow-version: ${{ inputs.node-version }}    
+        # with:
+        #   airflow-version: ${{ inputs.node-version }}    
       - run: echo ${ inputs.airflow-version }
       - run: echo "🍏 This job's status is ${{ job.status }}."
     
